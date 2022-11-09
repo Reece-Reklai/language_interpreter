@@ -1,2 +1,2 @@
 # language_interpreter
-Within docs/main/
+language_interpreter/language-interpreter-lab-master/src/main/jjtree/
