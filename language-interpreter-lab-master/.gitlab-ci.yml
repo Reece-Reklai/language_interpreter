@@ -1,0 +1,32 @@
+---
+image: maven:latest
+
+variables:
+  MAVEN_CLI_OPTS: "--batch-mode -U"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+
+Spelling:
+  stage: test
+  image: "python:3.7"
+  before_script:
+    - apt install -qqy gcc
+    - python --version
+    - pip install -r requirements.txt
+  script:
+    - codespell -f
+
+build:
+  stage: build
+  script:
+    - mvn $MAVEN_CLI_OPTS compile
+
+All Tests:
+  stage: test
+  script:
+    - mvn $MAVEN_CLI_OPTS test
+  artifacts:
+    reports:
+      junit:
+        - target/surefire-reports/TEST-*.xml
+    expire_in: 10 week
